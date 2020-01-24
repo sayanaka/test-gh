@@ -19,13 +19,13 @@ jobs:
 
             console.log('=> context.repo')
             console.log(context.repo)
-            /**
-            console.log('=> head')
-            console.log(context.pull_request.head)
-            */
+
+            console.log('=> PR_head')
+            console.log(context.payload.pull_request.head)
+
 
             // マージされていない場合は何もしない
-            if (!context.pull_request.merged){
+            if (!context.payload.pull_request.merged){
               console.log('マージされていないので抜けます')
               return
             }
