@@ -27,7 +27,8 @@ jobs:
             github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'テストよ',
+              title: `prod web ${context.payload.number}`,
               head: 'master',
               base: 'deploy',
+              body: `prod web ${context.payload.number}`,
             })
