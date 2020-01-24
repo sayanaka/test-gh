@@ -14,12 +14,6 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log('=> context')
-            console.log(context)
-
-            console.log('=> タイトル')
-            console.log(`prod web ${context.payload.number}`)
-
             // マージされていない場合は何もしない
             if (!context.payload.pull_request.merged){
               console.log('マージされていないので抜けます')
@@ -35,6 +29,9 @@ jobs:
               head: 'master',
               base: 'deploy',
               body: `prod web #${context.payload.number}`,
+            }).then(result => {
+              console.log("処理完了やで")
+              console.log(result)
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR作成を中止しました')
               console.log(e.message)
