@@ -17,13 +17,6 @@ jobs:
             console.log('=> context')
             console.log(context)
 
-            console.log('=> context.repo')
-            console.log(context.repo)
-
-            console.log('=> PR_head')
-            console.log(context.payload.pull_request.head)
-
-
             // マージされていない場合は何もしない
             if (!context.payload.pull_request.merged){
               console.log('マージされていないので抜けます')
@@ -31,12 +24,10 @@ jobs:
             }
 
             console.log('マージされたので作るよ')
-            /** 
             github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'テストよ',
-              head: 'deploy',
-              base: ,
+              head: 'master',
+              base: 'deploy',
             })
-            */
