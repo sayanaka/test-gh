@@ -36,6 +36,6 @@ jobs:
               base: 'deploy',
               body: `prod web #${context.payload.number}`,
             }).catch(e => {
-              console.error('下記のエラーが発生したため、PR作成を中止しました')
-              console.error(e.message)
+              console.log('下記のエラーが発生したため、PR作成を中止しました')
+              console.log(e.message)
             })
