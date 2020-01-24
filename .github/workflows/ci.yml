@@ -29,7 +29,7 @@ jobs:
               base: 'deploy_web',
               body: pr_title_web,
             }).then(result => {
-              console.log("PR(web) : 作成完了")
+              console.log('PR(web) : 作成完了')
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(web)作成を中止しました。')
               console.log(e.message)
@@ -45,7 +45,7 @@ jobs:
               base: 'deploy_client',
               body: pr_title_client,
             }).then(result => {
-              console.log("PR(client) : 作成完了")
+              console.log('PR(client) : 作成完了')
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
               console.log(e.message)
