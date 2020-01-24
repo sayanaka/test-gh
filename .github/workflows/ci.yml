@@ -27,6 +27,7 @@ jobs:
             }
 
             console.log('マージされたので作るよ')
+
             github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -34,4 +35,6 @@ jobs:
               head: 'master',
               base: 'deploy',
               body: `prod web #${context.payload.number}`,
+            }).catch(e => {
+              console.log(e)
             })
