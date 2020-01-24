@@ -14,4 +14,27 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            console.log('=> context')
             console.log(context)
+
+            console.log('=> context.repo.repo')
+            console.log(context.repo.repo)
+            console.log('=> head')
+            console.log(context.pull_request.head)
+
+            // マージされていない場合は何もしない
+            if (!context.pull_request.merged){
+              console.log('マージされていないので抜けます')
+              return
+            }
+
+            console.log('マージされたので作るよ')
+            /** 
+            github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'テストよ',
+              head: 'deploy',
+              base: ,
+            })
+            */
