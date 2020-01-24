@@ -1,16 +1,17 @@
 name: CI
 
-on: 
+on:
   pull_request:
     types: closed
     branches: master
 
 jobs:
   create_pr:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
+      - uses: actions/github-script@0.4.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            console.log(result)
