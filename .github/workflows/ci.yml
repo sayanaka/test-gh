@@ -16,23 +16,37 @@ jobs:
           script: |
             // マージされていない場合は何もしない
             if (!context.payload.pull_request.merged){
-              console.log('マージされていないので抜けます')
               return
             }
 
-            console.log('マージされたので作るよ')
-
+            // PR作成（web）
+            const pr_title_web = `prod web #${context.payload.number}`
             github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `prod web #${context.payload.number}`,
+              title: pr_title_web,
               head: 'master',
-              base: 'deploy',
-              body: `prod web #${context.payload.number}`,
+              base: 'deploy_web',
+              body: pr_title_web,
             }).then(result => {
-              console.log("処理完了やで")
-              console.log(result)
+              console.log("PR(web) : 作成完了")
             }).catch(e => {
-              console.log('下記のエラーが発生したため、PR作成を中止しました')
+              console.log('下記のエラーが発生したため、PR(web)作成を中止しました。')
+              console.log(e.message)
+            })
+
+            // PR作成（client）
+            const pr_title_client = `prod client #${context.payload.number}`
+            github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: pr_title_client,
+              head: 'master',
+              base: 'deploy_client',
+              body: pr_title_client,
+            }).then(result => {
+              console.log("PR(client) : 作成完了")
+            }).catch(e => {
+              console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
               console.log(e.message)
             })
