@@ -35,6 +35,10 @@ jobs:
               console.log(e.name)
               console.log(e.message)
               console.log(e.stack)
+              console.log("=> e.errors")
+              console.log(e.errors)
+              console.log(e.errors[0])
+              console.log(e.errors[0].field)
 
               // 同等のPRが存在している場合は、元PRにコメントする
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
@@ -58,8 +62,10 @@ jobs:
               //console.log(e.name)
               console.log(e.message)
               //console.log(e.stack)
-              const hoge = JSON.parse(e.message)
-              console.log(hoge.resource) // -> PullRequest
+              console.log("=> e.errors")
+              console.log(e.errors)
+              console.log(e.errors[0])
+              console.log(e.errors[0].field)
             })
 
             // これは絶対落ちるやつ（ブランチが存在しない）
@@ -81,9 +87,9 @@ jobs:
               console.log(e.stack)
 
               console.log("=> e.errors")
-
               console.log(e.errors)
               console.log(e.errors[0])
+              console.log(e.errors[0].field)
 
               // 同等のPRが存在している場合は、元PRにコメントする
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
