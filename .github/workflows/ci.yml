@@ -35,8 +35,6 @@ jobs:
               console.log(e.message)
 
               // 同等のPRが存在している場合は、元PRにコメントする
-              console.log("=> e.message.field")
-              console.log(e.message.field)
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
                 console.log("同じの存在しとったわ")
               }
@@ -55,6 +53,7 @@ jobs:
               console.log('PR(client) : 作成完了')
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
+              console.log(e.name)
               console.log(e.message)
             })
 
@@ -71,11 +70,11 @@ jobs:
               console.log('PR(おちるやつ) : 作成完了')
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
-              console.log(e)
+              //console.log(e)
+              console.log(e.name)
+              console.log(e.message)
 
               // 同等のPRが存在している場合は、元PRにコメントする
-              console.log("=> e.message.field")
-              console.log(e.message.field)
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
                 console.log("同じの存在し取ったわ")
               }
