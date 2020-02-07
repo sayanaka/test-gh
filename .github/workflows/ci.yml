@@ -50,3 +50,19 @@ jobs:
               console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
               console.log(e.message)
             })
+
+            // これは絶対落ちるやつ（ブランチが存在しない）
+            const pr_title_err = `これはおちます`
+            github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: pr_title_err,
+              head: 'blank',
+              base: 'deploy_client',
+              body: pr_title_err,
+            }).then(result => {
+              console.log('PR(おちるやつ) : 作成完了')
+            }).catch(e => {
+              console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
+              console.log(e)
+            })
