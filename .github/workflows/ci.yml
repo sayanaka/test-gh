@@ -76,12 +76,14 @@ jobs:
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
               //console.log(e)
-              //console.log(e.name)
+              console.log(e.name)
               console.log(e.message)
-              //console.log(e.stack)
+              console.log(e.stack)
 
-              const hoge = JSON.parse(e.message)
-              console.log(hoge.resource) // -> PullRequest
+              console.log("=> e.errors")
+
+              console.log(e.errors)
+              console.log(e.errors[0])
 
               // 同等のPRが存在している場合は、元PRにコメントする
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
