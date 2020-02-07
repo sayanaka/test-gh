@@ -35,6 +35,8 @@ jobs:
               console.log(e.message)
 
               // 同等のPRが存在している場合は、元PRにコメントする
+              console.log("=> e.message.field")
+              console.log(e.message.field)
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
                 console.log("同じの存在しとったわ")
               }
@@ -72,6 +74,8 @@ jobs:
               console.log(e)
 
               // 同等のPRが存在している場合は、元PRにコメントする
+              console.log("=> e.message.field")
+              console.log(e.message.field)
               if (e.status === 422 && e.message.field === "head" && e.message.code === "invalid") {
                 console.log("同じの存在し取ったわ")
               }
