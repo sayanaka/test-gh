@@ -32,6 +32,7 @@ jobs:
               console.log('PR(web) : 作成完了')
             }).catch(e => {
               console.log('下記のエラーが発生したため、PR(web)作成を中止しました。')
+              console.log(e.name)
               console.log(e.message)
 
               // 同等のPRが存在している場合は、元PRにコメントする
