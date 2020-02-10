@@ -95,14 +95,12 @@ jobs:
                 //     repo: context.repo.repo,
                 //     body: '👋 Thanks for reporting!'
                 // })
-                // github.pulls.createComment({
-                //     owner: context.repo.owner,
-                //     repo: context.repo.repo,
-                //     pull_number,
-                //     body: ``,
-                //     commit_id,
-                //     path
-                // })
+                github.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.payload.number,
+                    body: `同じものが存在していたよ`,
+                })
                 console.log("=> context")
                 console.log(context)
                 console.log("同じのが存在してました")
