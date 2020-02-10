@@ -32,7 +32,7 @@ jobs:
                 console.log('PR(web) : 作成完了')
             }).catch(e => {
                 e.errors.map(t => {
-                    if (t.message.includes("A pull request already exists")) {
+                    if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         console.log("同じの存在してた")
                     }
                     console.log('下記のエラーが発生したため、PR(web)作成を中止しました。')
@@ -53,7 +53,7 @@ jobs:
                 console.log('PR(client) : 作成完了')
             }).catch(e => {
                 e.errors.map(t => {
-                    if (t.message.includes("A pull request already exists")) {
+                    if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         console.log("同じの存在してた")
                     }
                     console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
@@ -74,7 +74,7 @@ jobs:
                 console.log('PR(おちるやつ) : 作成完了')
             }).catch(e => {
                 e.errors.map(t => {
-                    if (t.message.includes("A pull request already exists")) {
+                    if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         // 同等のPRが存在している場合は、元PRにコメントする
                         console.log("同じの存在してた")
                     }
