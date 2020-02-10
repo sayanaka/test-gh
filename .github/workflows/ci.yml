@@ -33,10 +33,12 @@ jobs:
             }).catch(e => {
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
-                        console.log("同じの存在してた")
+                        // 同等のPRが存在している場合は、元PRにコメントする
+                        createPRComment()
+                    } else {
+                        console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
+                        console.log(e.message)
                     }
-                    console.log('下記のエラーが発生したため、PR(web)作成を中止しました。')
-                    console.log(e.message)
                 })
             })
 
@@ -54,10 +56,12 @@ jobs:
             }).catch(e => {
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
-                        console.log("同じの存在してた")
+                        // 同等のPRが存在している場合は、元PRにコメントする
+                        createPRComment()
+                    } else {
+                        console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
+                        console.log(e.message)
                     }
-                    console.log('下記のエラーが発生したため、PR(client)作成を中止しました。')
-                    console.log(e.message)
                 })
             })
 
@@ -76,9 +80,30 @@ jobs:
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         // 同等のPRが存在している場合は、元PRにコメントする
-                        console.log("同じの存在してた")
+                        createPRComment()
+                    } else {
+                        console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
+                        console.log(e.message)
                     }
-                    console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
-                    console.log(e.message)
                 })
             })
+
+            const createPRComment = () => {
+                // github.issues.createComment({
+                //     issue_number: context.issue.number,
+                //     owner: context.repo.owner,
+                //     repo: context.repo.repo,
+                //     body: '👋 Thanks for reporting!'
+                // })
+                // github.pulls.createComment({
+                //     owner: context.repo.owner,
+                //     repo: context.repo.repo,
+                //     pull_number,
+                //     body: ``,
+                //     commit_id,
+                //     path
+                // })
+                console.log("=> context")
+                console.log(context)
+                console.log("同じのが存在してました")
+            }
