@@ -20,13 +20,14 @@ jobs:
             }
 
             // PR作成（web）
+            const new_pr_web_base_branch = 'deploy_web'
             const pr_title_web = `prod web #${context.payload.number}`
             github.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: pr_title_web,
                 head: 'master',
-                base: 'deploy_web',
+                base: new_pr_web_base_branch,
                 body: pr_title_web,
             }).then(result => {
                 console.log('PR(web) : 作成完了')
@@ -34,7 +35,7 @@ jobs:
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         // 同等のPRが存在している場合は、元PRにコメントする
-                        createPRComment()
+                        createPRComment(new_pr_web_base_branch)
                     } else {
                         console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
                         console.log(e.message)
@@ -43,13 +44,14 @@ jobs:
             })
 
             // PR作成（client）
+            const new_pr_client_base_branch = 'deploy_client'
             const pr_title_client = `prod client #${context.payload.number}`
             github.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: pr_title_client,
                 head: 'master',
-                base: 'deploy_client',
+                base: new_pr_client_base_branch,
                 body: pr_title_client,
             }).then(result => {
                 console.log('PR(client) : 作成完了')
@@ -57,7 +59,7 @@ jobs:
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         // 同等のPRが存在している場合は、元PRにコメントする
-                        createPRComment()
+                        createPRComment(new_pr_client_base_branch)
                     } else {
                         console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
                         console.log(e.message)
@@ -72,7 +74,7 @@ jobs:
                 repo: context.repo.repo,
                 title: pr_title_err,
                 head: 'blank',
-                base: 'deploy_client',
+                base: new_pr_client_base_branch,
                 body: pr_title_err,
             }).then(result => {
                 console.log('PR(おちるやつ) : 作成完了')
@@ -80,7 +82,7 @@ jobs:
                 e.errors.map(t => {
                     if (t.message !== undefined && t.message.includes("A pull request already exists")) {
                         // 同等のPRが存在している場合は、元PRにコメントする
-                        createPRComment()
+                        createPRComment(new_pr_client_base_branch)
                     } else {
                         console.log('下記のエラーが発生したため、PR(おちるやつ)作成を中止しました。')
                         console.log(e.message)
@@ -88,16 +90,14 @@ jobs:
                 })
             })
 
-            const createPRComment = () => {
+            const createPRComment = (base_branch_name) => {
 
-                console.log("=> 元PRのBASE")
-                console.log(context.payload.pull_request.base.ref)
                 console.log("=> 元PRのHEAD")
                 console.log(context.payload.pull_request.head.ref)
 
 
                 github.search.issuesAndPullRequests({
-                    q: `is:pr is:open head:${context.payload.pull_request.head.ref} base:${context.payload.pull_request.base.ref}`
+                    q: `is:pr is:open head:${context.payload.pull_request.head.ref} base:${base_branch_name}`
                 }).then(result => {
                     console.log("=> 検索結果")
                     console.log(result.data.items)
