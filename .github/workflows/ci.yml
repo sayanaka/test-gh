@@ -48,31 +48,26 @@ jobs:
                 github.search.issuesAndPullRequests({
                     q: `is:pr is:open head:${setting.head} base:${setting.base}`
                 }).then(result => {
-                    console.log(`=> 検索結果`)
-                    console.log(result.data.items)
 
-                    console.log(`=> 検索結果 １件目`)
-                    console.log(result.data.items[0])
+                    let samePrNumber = ``
+                    result.data.items.map((t, i) => {
+                        samePrNumber = i > 0 ? `${samePrNumber}, ${t.number}` : `${t.number}`
+                    })
+
+                    github.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.payload.number,
+                        body: `PR(${setting.note})と同等のPRがすでに存在しています => ${samePrNumber}`,
+                    })
                 })
-
-
-
-                // github.issues.createComment({
-                //     owner: context.repo.owner,
-                //     repo: context.repo.repo,
-                //     issue_number: context.payload.number,
-                //     body: `同じものが存在していたよ`,
-                // })
-                // console.log("=> context")
-                // console.log(context)
-                console.log(`同じのが存在してました`)
             }
 
             // 新しく作成するPRの設定
             const settings = {
                 web: { title: `prod web #${context.payload.number}`, head: `master`, base: `deploy_web`, note: `web` },
                 client: { title: `prod client #${context.payload.number}`, head: `master`, base: `deploy_client`, note: `client` },
-                test: { title: `これは落ちます`, head: `master`, base: `deploy_client`, note: `落ちるやつ` }
+                test: { title: `これは落ちます`, head: `master`, base: `naiyo`, note: `落ちるやつ` }
             }
 
             // PR作成（web）
