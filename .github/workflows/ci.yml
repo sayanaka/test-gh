@@ -51,7 +51,7 @@ jobs:
 
                     let samePrNumber = ``
                     result.data.items.map((t, i) => {
-                        samePrNumber = i > 0 ? `${samePrNumber}, ${t.number}` : `${t.number}`
+                        samePrNumber = i > 0 ? `#${samePrNumber}, #${t.number}` : `#${t.number}`
                     })
 
                     github.issues.createComment({
