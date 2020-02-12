@@ -54,12 +54,15 @@ jobs:
                         samePrNumber = i > 0 ? `#${samePrNumber}, #${t.number}` : `#${t.number}`
                     })
 
+                    const pr_comment = `PR(${setting.note})と同等のPRがすでに存在しています => ${samePrNumber}`
                     github.issues.createComment({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.payload.number,
-                        body: `PR(${setting.note})と同等のPRがすでに存在しています => ${samePrNumber}`,
+                        body: pr_comment,
                     })
+
+                    console.log(pr_comment)
                 })
             }
 
