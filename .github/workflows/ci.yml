@@ -92,12 +92,8 @@ jobs:
 
             const createPRComment = (base_branch_name) => {
 
-                console.log("=> 元PRのHEAD")
-                console.log(context.payload.pull_request.head.ref)
-
-
                 github.search.issuesAndPullRequests({
-                    q: `is:pr is:open head:${context.payload.pull_request.head.ref} base:${base_branch_name}`
+                    q: `is:pr is:open head:master base:${base_branch_name}`
                 }).then(result => {
                     console.log("=> 検索結果")
                     console.log(result.data.items)
