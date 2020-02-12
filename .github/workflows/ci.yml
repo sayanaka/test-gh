@@ -19,21 +19,6 @@ jobs:
                 return
             }
 
-            const settings = {
-                web: { title: `prod web #${context.payload.number}`, head: `master`, base: `deploy_web`, note: `web` },
-                client: { title: `prod client #${context.payload.number}`, head: `master`, base: `deploy_client`, note: `client` },
-                test: { title: `これは落ちます`, head: `master`, base: `deploy_client`, note: `落ちるやつ` }
-            }
-
-            // PR作成（web）
-            createPR(settings.web)
-
-            // PR作成（client）
-            createPR(settings.client)
-
-            // これは絶対落ちるやつ（ブランチが存在しない）
-            createPR(settings.test)
-
             const createPR = (setting) => {
                 // PR作成
                 github.pulls.create({
@@ -82,3 +67,19 @@ jobs:
                 // console.log(context)
                 console.log(`同じのが存在してました`)
             }
+
+            // 新しく作成するPRの設定
+            const settings = {
+                web: { title: `prod web #${context.payload.number}`, head: `master`, base: `deploy_web`, note: `web` },
+                client: { title: `prod client #${context.payload.number}`, head: `master`, base: `deploy_client`, note: `client` },
+                test: { title: `これは落ちます`, head: `master`, base: `deploy_client`, note: `落ちるやつ` }
+            }
+
+            // PR作成（web）
+            createPR(settings.web)
+
+            // PR作成（client）
+            createPR(settings.client)
+
+            // これは絶対落ちるやつ（ブランチが存在しない）
+            createPR(settings.test)
