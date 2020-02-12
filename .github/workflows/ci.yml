@@ -19,8 +19,8 @@ jobs:
                 return
             }
 
+            // PR作成
             const createPR = (setting) => {
-                // PR作成
                 github.pulls.create({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
@@ -34,7 +34,7 @@ jobs:
                     e.errors.map(t => {
                         if (t.message !== undefined && t.message.includes(`A pull request already exists`)) {
                             // 同等のPRが存在している場合は、元PRにコメントする
-                            createPRComment(setting)
+                            createSamePRComment(setting)
                         } else {
                             console.log(`PR(${setting.note}) : 下記のエラーが発生したため、作成を中止しました。`)
                             console.log(e.message)
@@ -43,26 +43,27 @@ jobs:
                 })
             }
 
-            const createPRComment = (setting) => {
+            // 同等のPRが存在している場合は、元PRにコメントする
+            const createSamePRComment = (setting) => {
 
                 github.search.issuesAndPullRequests({
                     q: `is:pr is:open head:${setting.head} base:${setting.base}`
                 }).then(result => {
 
-                    let samePrNumber = ``
+                    let same_pr_number = ``
                     result.data.items.map((t, i) => {
-                        samePrNumber = i > 0 ? `#${samePrNumber}, #${t.number}` : `#${t.number}`
+                        same_pr_number = i > 0 ? `#${same_pr_number}, #${t.number}` : `#${t.number}`
                     })
 
-                    const pr_comment = `PR(${setting.note}) : 同等のPRがすでに存在しています => ${samePrNumber}`
+                    const pr_info = `PR(${setting.note}) : 同等のPRがすでに存在しています => ${same_pr_number}`
                     github.issues.createComment({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.payload.number,
-                        body: pr_comment,
+                        body: pr_info,
                     })
 
-                    console.log(pr_comment)
+                    console.log(pr_info)
                 })
             }
 
