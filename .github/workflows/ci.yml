@@ -91,9 +91,9 @@ jobs:
             const createPRComment = () => {
 
                 console.log("=> 元PRのBASE")
-                console.log(context.pull_request.base)
+                console.log(context.payload.pull_request.base)
                 console.log("=> 元PRのHEAD")
-                console.log(context.pull_request.head)
+                console.log(context.payload.pull_request.head)
 
 
                 github.search.issuesAndPullRequests({
