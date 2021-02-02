@@ -13,15 +13,25 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log('[ head ]')
-            console.log(context.payload.pull_request.head)
-            console.log('[ base ]')
-            console.log(context.payload.pull_request.base)
-            console.log(context)
-            const pr_info = `PR(${setting.note}) : 同等のPRがすでに存在しています => ${same_pr_number}`
+            const headBranchName = context.payload.pull_request.head.ref;
+
+            let ENV_NAME = "";
+            let ROOT_DIR_NAME = "";
+
+            const regex = new RegExp("^demo[0-2]/", "g");
+            const envNameArray = regex.exec(headBranchName);
+            if (envNameArray !== null) {
+              ENV_NAME = envNameArray[0];
+              ROOT_DIR_NAME = headBranchName.slice(regex.lastIndex);
+            }
+
+            console.log(ENV_NAME)
+            console.log(ROOT_DIR_NAME)
+
+            const url_info = `URL => https://${ENV_NAME}.hoge.fuga/${ROOT_DIR_NAME}index.html`;
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'hoge'
-            })
+              body: url_info,
+            });
