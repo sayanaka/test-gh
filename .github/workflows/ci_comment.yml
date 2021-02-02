@@ -13,7 +13,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(github)
+            console.log('[ head ]')
+            console.log(context.payload.pull_request.head)
+            console.log('[ base ]')
+            console.log(context.payload.pull_request.base)
             console.log(context)
             const pr_info = `PR(${setting.note}) : 同等のPRがすでに存在しています => ${same_pr_number}`
             github.issues.createComment({
