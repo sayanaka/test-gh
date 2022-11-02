@@ -3,7 +3,9 @@ name: CI_comment
 on:
   pull_request:
     types: opened
-    branches: master
+    branches:
+      - master
+      - master_test
 
 jobs:
   comment:
