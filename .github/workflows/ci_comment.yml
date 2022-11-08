@@ -5,14 +5,18 @@ on:
     types: opened
     branches:
       - master
-      - master_test
+      - develop
 
 jobs:
   comment:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-      - uses: actions/github-script@v3.1.0
+      - uses: actions/github-script@v6
         with:
+          node-version: "16"
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const headBranchName = context.payload.pull_request.head.ref;
