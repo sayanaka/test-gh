@@ -3,15 +3,16 @@ name: CI_comment
 on:
   pull_request:
     types: opened
-    branches:
-      - master
-      - master_test
+    branches: ["master", "develop"]
 
 jobs:
   comment:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-      - uses: actions/github-script@v3.1.0
+      - uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -31,7 +32,7 @@ jobs:
             console.log(ROOT_DIR_NAME)
 
             const url_info = `URL => https://${ENV_NAME}.hoge.fuga/${ROOT_DIR_NAME}index.html`;
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
