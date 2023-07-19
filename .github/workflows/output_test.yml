@@ -22,8 +22,8 @@ jobs:
       - name: Read OUTPUT
         run: |
           # データ表示
-          read_flg = steps.setoutput.outputs.test_flg
-          read_text = steps.setoutput.outputs.test_text
+          read_flg=steps.setoutput.outputs.test_flg
+          read_text=steps.setoutput.outputs.test_text
 
           echo $read_result
           echo $read_text
