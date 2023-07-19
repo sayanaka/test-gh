@@ -1,0 +1,29 @@
+name: OUTPUT_TEST
+
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set OUTPUT
+        id: setoutput
+        run: |
+          result=true
+          text=test
+
+          # データ保持
+          echo "test_flg=result" >> $GITHUB_OUTPUT
+          echo "test_text=text" >> $GITHUB_OUTPUT
+
+      - name: Read OUTPUT
+        run: |
+          # データ表示
+          read_flg = steps.setoutput.outputs.test_flg
+          read_text = steps.setoutput.outputs.test_text
+
+          echo $read_result
+          echo $read_text
