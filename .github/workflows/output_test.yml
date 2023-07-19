@@ -35,6 +35,6 @@ jobs:
 
       - name: Call with False
         # falseの場合のみ発火
-        if: steps.setoutput.outputs.test_flg == 'true'
+        if: steps.setoutput.outputs.test_flg == 'false'
         run: |
           echo "こんばんは"
