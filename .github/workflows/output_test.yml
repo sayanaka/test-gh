@@ -14,10 +14,12 @@ jobs:
         run: |
           result=true
           text=test
+          echo $result
+          echo $text
 
           # データ保持
-          echo "test_flg=result" >> $GITHUB_OUTPUT
-          echo "test_text=text" >> $GITHUB_OUTPUT
+          echo "test_flg=$result" >> $GITHUB_OUTPUT
+          echo "test_text=$text" >> $GITHUB_OUTPUT
 
       - name: Read OUTPUT
         run: |
