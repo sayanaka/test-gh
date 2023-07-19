@@ -26,3 +26,15 @@ jobs:
           # データ表示
           echo ${{steps.setoutput.outputs.test_flg}}
           echo ${{steps.setoutput.outputs.test_text}}
+
+      - name: Call with True
+        # trueの場合のみ発火
+        if: steps.setoutput.outputs.test_flg == 'true'
+        run: |
+          echo "こんにちは"
+
+      - name: Call with False
+        # falseの場合のみ発火
+        if: steps.setoutput.outputs.test_flg == 'true'
+        run: |
+          echo "こんばんは"
